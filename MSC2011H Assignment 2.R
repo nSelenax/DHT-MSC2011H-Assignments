@@ -1,4 +1,4 @@
-# Assignment 2
+# MSC2011H Assignment 2
 # Ning Xu
 
 # Prompt the user to enter a three digit positive number (get user input)
