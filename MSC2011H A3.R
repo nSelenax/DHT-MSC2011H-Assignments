@@ -64,26 +64,28 @@ secret_char <- strsplit(secret_word, "")
 indices <- c()
 while (mistakes > 0) {
   user_input <- ask_input()
-  if(sum(grepl(user_input, secret_char[[1]], ignore.case = T)) > 0) {
+  if(sum(grepl(user_input, secret_char[[1]], ignore.case = T)) > 0) { #check to see if user_input is in the secret word
     for(i in seq_along(secret_char[[1]])) {
       if (user_input == secret_char[[1]][i]) {
         indices <- append(indices, -i)
       } 
     }
-    secret_char[[1]] <- secret_char[[1]][indices]
+    secret_char[[1]] <- secret_char[[1]][indices]  #if user_input is in the secret word, I will remove the letter(s) from the secret word
     indices <- c()
-    if(length(secret_char[[1]]) == 0) {
-      mistakes <- -1
-      print(paste("You won! You have guessed the word correctly, which is: ", secret_word))
+    if(length(secret_char[[1]]) == 0) { #the user has guessed all letters correctly
+      mistakes <- -1 #so that we can exit the while loop
+      # If user has guessed the whole word correctly, notify user that they’ve won. Reveal secret and exit.
+      print(paste("You won! You have guessed the word correctly, which is:", secret_word))
     } else {
+      # If user has not exhausted the available tries, ask for the next letter.
       print("Correct! Please guess another character.")
     }
   } else {
-    mistakes <- mistakes - 1
-    print(paste("Incorrect. Please guess another character. Your number of wrong guesses allowed is now", mistakes))
+    mistakes <- mistakes - 1 #If user has guessed incorrectly or entered a repeated letter, the number of wrong guesses allowed is reduced by 1.
+    print(paste("Incorrect or you may have entered a repeated letter. Please guess another character. Your number of wrong guesses allowed is now", mistakes))
   }
 }
 #' If tries are exhausted, notify user that they’ve lost. Reveal secret and exit.
 if(mistakes == 0) {
-  print(paste("Sorry, you have lost. The secret word is: ", secret_word, ". Exiting game..."))
+  print(paste("Sorry, you have lost. The secret word is:", secret_word, ". Exiting game..."))
 }
